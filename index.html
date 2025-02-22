@@ -9,73 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
     <!-- CSS -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #login-container, #chat-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        input[type="text"] {
-            padding: 10px;
-            width: 80%;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #messages {
-            background-color: #f9f9f9;
-            padding: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-        }
-
-        #qrcode img {
-            width: 200px;
-            height: 200px;
-        }
-
-        #send {
-            background-color: #2196F3;
-        }
-
-        #send:hover {
-            background-color: #1e88e5;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -102,69 +36,7 @@
         <div id="qrcode"></div>
     </div>
 
-    <script>
-        // Giriş yapma ve QR kodu oluşturma
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            
-            if (username) {
-                // Kullanıcı adını URL'de kullanabilmek için encode et
-                const encodedUsername = encodeURIComponent(username);
-
-                // Kullanıcı adını tarayıcıda saklamak
-                localStorage.setItem('username', username);
-                
-                // Giriş formunu gizle ve sohbeti göster
-                document.getElementById('login-container').style.display = 'none';
-                document.getElementById('chat-container').style.display = 'block';
-
-                // Sohbete katılan kullanıcı adı ekle
-                document.getElementById('username-display').textContent = username;
-                
-                // QR kodu için URL oluştur
-                const url = `https://sohbetplatformu.com/index.html?username=${encodedUsername}`;
-
-                // QR kodunu oluştur
-                QRCode.toDataURL(url, function(error, dataURL) {
-                    if (error) {
-                        console.error('QR kodu oluşturulamadı:', error);
-                    } else {
-                        // QR kodunu img etiketi olarak ekle
-                        const imgElement = document.createElement('img');
-                        imgElement.src = dataURL;
-                        document.getElementById('qrcode').appendChild(imgElement);
-                        console.log('QR kodu başarıyla oluşturuldu!');
-                    }
-                });
-                
-                // Sohbet mesajları
-                const message = document.getElementById('message').value;
-                const newMessage = document.createElement('p');
-                newMessage.innerHTML = `<strong>${username}:</strong> Merhaba!`;
-                document.getElementById('messages').appendChild(newMessage);
-            }
-        });
-
-        // Mesaj gönderme
-        document.getElementById('send').addEventListener('click', function() {
-            const message = document.getElementById('message').value;
-            const username = localStorage.getItem('username');
-            
-            if (message && username) {
-                const newMessage = document.createElement('p');
-                newMessage.innerHTML = `<strong>${username}:</strong> ${message}`;
-                document.getElementById('messages').appendChild(newMessage);
-                document.getElementById('message').value = '';  // Mesaj kutusunu temizle
-            }
-        });
-        
-        // URL'deki parametreyi al ve sayfada göster
-        const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('username');
-        if (username) {
-            document.getElementById('username-display').textContent = username;
-        }
-    </script>
+    <!-- app.js Dosyasının Bağlantısı -->
+    <script src="app.js"></script>
 </body>
 </html>
